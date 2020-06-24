@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack</title>
+    <style>
+        #stack {
+            height: 90px;
+            width: 500px;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .item {
+            margin-top: 5px;
+            height: 80px;
+            width: 50px;
+            margin-left: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stack">
+        <!-- <div class="item">
+            <h1>A</h1>
+        </div>
+        <div class="item">
+
+        </div>
+        <div class="item">
+
+        </div> -->
+    </div>
+    <form>
+        <input type="text">
+        <button id="push">PUSH</button>
+        <button id="pop">POP</button>
+        <button id="shift">SHIFT</button>
+        <button id="clear">CLEAR</button>
+    </form>
+
+
+    <script>
+        window.addEventListener("load", function(){
+            let pushBtn = document.getElementById("push")
+            pushBtn.addEventListener("click", push)
+            let popBtn = document.getElementById("pop")
+            popBtn.addEventListener("click", pop)
+            let shiftBtn = document.getElementById("shift")
+            shiftBtn.addEventListener("click", shift)
+            let clearBtn = document.getElementById("clear")
+            clearBtn.addEventListener("click", clear)
+        })
+
+        function push() {
+            event.preventDefault()
+            let input = document.querySelector("input").value
+            document.querySelector("input").value = ""
+            input = input.split("")
+            let stack = document.getElementById("stack")
+            let len = input.length
+            console.log(len)
+            let count = 0
+            let animate = setInterval(() => {
+                console.log(count, len)
+                if (len < 2) {
+                    clearInterval(animate)
+                }
+
+                let div = document.createElement("div")
+                let randomColor = Math.floor(Math.random()*16777215).toString(16);
+                div.setAttribute("class", "item")
+                div.style.backgroundColor = `#${randomColor}`
+                let h1 = document.createElement("h1")
+                h1.textContent = input[count]
+                div.append(h1)
+                stack.append(div)
+                count++
+                len--
+            }, 500)
+        }
+
+        function shift() {
+            event.preventDefault()
+            var stack = document.getElementById("stack")
+            stack.children[0].remove()
+        }
+
+        function pop() {
+            event.preventDefault()
+            var stack = document.getElementById("stack")
+            stack.children[stack.children.length - 1].remove()
+        }
+
+        function clear() {
+            let stack = document.getElementById("stack")
+            stack.innerHTML = ""
+        }
+    </script>
+</body>
+</html>
