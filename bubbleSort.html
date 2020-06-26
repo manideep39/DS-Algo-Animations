@@ -13,7 +13,7 @@
         <small id="help-text" style="color:red"></small>
         <button>Sort</button>
     </form>
-    <div style="width:700px; height: 400px; border: 1px solid red; display: flex; flex-direction: row" id="box">
+    <div style="width:700px; height: 200px; border: 1px solid red; display: flex; flex-direction: row" id="box">
 
     </div>
 
@@ -53,12 +53,16 @@
                 console.log(input[i])
                 console.log(Math.floor(100 / totalDivs))
                 const div = document.createElement("div")
-                Object.assign(div.style, {backgroundColor: "blue", marginRight: "5px", width: `${(totalDivs / 100) * 1000}px`, height: `${(input[i] / max) * 100}px`})
+                const h = document.createElement("h3")
+                h.style.marginTop = "0px"
+                h.textContent = input[i]
+                div.appendChild(h)
+                Object.assign(div.style, {backgroundColor: "blue", marginRight: "5px", width: `${(totalDivs / 100) * 1000}px`, height: `${(input[i] / max) * 100}px`, color:"white"})
                 box.appendChild(div)
             }
         }
 
-        function bubbleSort(input) {
+        async function bubbleSort(input) {
 
             for (let i = 0; i < input.length - 1; i++) {
                 var flag = false
@@ -70,16 +74,27 @@
                         input[j] = input[j + 1]
                         input[j + 1] = temp
                         flag = true
+                        await sleep()
+                        createDiv(input)
                     }
                 }
+
 
 
                 if (!flag) {
                     break
                 }
             }
-            createDiv(input)
+            // 89 100 23 30 45 12 34 60 56 87 100 13 34 4 
+
             console.log(input)
+        }
+
+        // dummy promise to just delay the calling of function
+        function sleep() {
+            return new Promise((resolve) => {
+                setTimeout(() => {resolve()}, 1000)
+            })
         }
 
     </script>
