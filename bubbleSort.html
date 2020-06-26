@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort Animation</title>
+</head>
+<body>
+    <h1 style="margin: 50px;">Bubble Sort</h1>
+    <form style="display:grid; gap: 10px; width:200px; margin: 50px">
+        <label>Enter space seprated numbers:</label>
+        <input type="text">
+        <small id="help-text" style="color:red"></small>
+        <button>Sort</button>
+    </form>
+    <div style="width:700px; height: 400px; border: 1px solid red; display: flex; flex-direction: row" id="box">
+
+    </div>
+
+
+    <script>
+        window.onload = function () {
+            const sortBtn = document.querySelector("button");
+            const input = document.querySelector("input");
+            input.focus();
+            sortBtn.addEventListener("click", function(){
+                validateInput(input.value);
+            })
+        }
+
+        function validateInput(input) {
+            event.preventDefault();
+            input = input.trim().split(" ")
+            input = input.map(Number)
+            let helpText = document.getElementById("help-text")
+            helpText.innerHTML = ""
+            if (input.includes(NaN) || input.length == 1) {
+                helpText.textContent = "Check input"
+            } else {
+                console.log(input)
+                bubbleSort(input)
+            }
+
+        }
+
+        function createDiv(input) {
+            const totalDivs = input.length
+            const max = Math.max(...input)
+            console.log("this is max", max)
+            const box = document.getElementById("box")
+            box.innerHTML = ""
+            for (let i = 0; i < totalDivs; i++) {
+                console.log(input[i])
+                console.log(Math.floor(100 / totalDivs))
+                const div = document.createElement("div")
+                Object.assign(div.style, {backgroundColor: "blue", marginRight: "5px", width: `${(totalDivs / 100) * 1000}px`, height: `${(input[i] / max) * 100}px`})
+                box.appendChild(div)
+            }
+        }
+
+        function bubbleSort(input) {
+
+            for (let i = 0; i < input.length - 1; i++) {
+                var flag = false
+
+                for (let j = 0; j < input.length - 1; j++) {
+
+                    if (input[j] > input[j + 1]) {
+                        let temp = input[j]
+                        input[j] = input[j + 1]
+                        input[j + 1] = temp
+                        flag = true
+                    }
+                }
+
+
+                if (!flag) {
+                    break
+                }
+            }
+            createDiv(input)
+            console.log(input)
+        }
+
+    </script>
+</body>
+</html>
