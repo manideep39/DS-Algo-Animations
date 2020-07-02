@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Sort Animation</title>
+
+    <title>Selection Sort Animation</title>
 </head>
 <body>
-    <h1 style="margin: 50px;">Bubble Sort</h1>
+
+    <h1 style="margin: 50px;">Selection Sort</h1>
     <form style="display:grid; gap: 10px; width:200px; margin: 50px">
         <label>Enter space seprated numbers:</label>
         <input type="text">
@@ -40,19 +42,16 @@
                 helpText = "Sorting not required"
             } else {
                 max = Math.max(...input)
-                bubbleSort(input)
+                selectionSort(input)
             }
 
         }
 
         function createDiv(input) {
             const totalDivs = input.length
-            // console.log("this is max", max)
             const box = document.getElementById("box")
             box.innerHTML = ""
             for (let i = 0; i < totalDivs; i++) {
-                // console.log(input[i])
-                // console.log(Math.floor(100 / totalDivs))
                 const div = document.createElement("div")
                 const h = document.createElement("h3")
                 h.style.textAlign = "center"
@@ -65,34 +64,38 @@
             }
         }
 
-        // function trackDiv(x, color) {
-        //     var minTrack = document.getElementById(`${x}`)
-        //     minTrack.style.backgroundColor = color
-        // }
+        function trackDiv(x, color) {
+            var minTrack = document.getElementById(`${x}`)
+            minTrack.style.backgroundColor = color
+        }
 
-        async function bubbleSort(input) {
+
+        async function selectionSort(input) {
 
             for (let i = 0; i < input.length - 1; i++) {
-                var flag = false
+                let min = i
+                createDiv(input)
+                await sleep()
+                trackDiv(input[min], "red") 
+                for (var j = i + 1; j < input.length; j++) {
+                    await sleep()
+                    trackDiv(input[j], "blue") 
 
-                for (let j = 0; j < input.length - 1; j++) {
-
-                    if (input[j] > input[j + 1]) {
-                        let temp = input[j]
-                        input[j] = input[j + 1]
-                        input[j + 1] = temp
-                        flag = true
+                    if (input[j] < input[min]) {
+                        min = j
                         await sleep()
-                        createDiv(input)
+                        trackDiv(input[min], "green") 
                     }
+
                 }
 
-                if (!flag) {
-                    break
-                }
+                let temp = input[i]
+                input[i] = input[min]
+                input[min] = temp
+                await sleep()
+                createDiv(input)
             }
-            // 89 100 23 30 45 12 34 60 56 87 100 13 34 4 
-
+            // 89 23 30 45 12 34 60 56 87 100 13 4 
         }
 
         // dummy promise to just delay the calling of function
